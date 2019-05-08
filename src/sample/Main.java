@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -13,8 +14,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.Random;
@@ -55,7 +58,17 @@ private double xOffset = 0;
                 Random random = new Random();
                 double randX = random.nextDouble()*280;
                 double randY = random.nextDouble()*230;
-                btn.relocate(randX, randY);
+                Line line = new Line();
+                line.setStartX(btn.getTranslateX()+20);
+                line.setStartY(btn.getTranslateY()+10);
+                line.setEndX(randX);
+                line.setEndY(randY);
+                PathTransition transition = new PathTransition();
+                transition.setNode(btn);
+                transition.setDuration(Duration.seconds(1));
+                transition.setPath(line);
+                transition.play();
+                //btn.relocate(randX, randY);
             }
         });
         root.getChildren().add(btn);
